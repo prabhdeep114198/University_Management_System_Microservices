@@ -1,0 +1,213 @@
+version: '3.8'
+
+services:
+  # ------------------------------------------------------------------
+  # 1. Discovery Service (Eureka)
+  # ------------------------------------------------------------------
+  eureka-server:
+    build: ./eureka-server
+    image: ums/eureka-server:1.0
+    container_name: eureka-server
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - ums-network
+
+  # ------------------------------------------------------------------
+  # 2. API Gateway
+  # ------------------------------------------------------------------
+  api-gateway:
+    build: ./api-gateway
+    image: ums/api-gateway:1.0
+    container_name: api-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+    depends_on:
+      - eureka-server
+    networks:
+      - ums-network
+
+  # ------------------------------------------------------------------
+  # 3. MySQL Databases
+  # ------------------------------------------------------------------
+  mysql-auth:
+    image: mysql:8.0
+    container_name: mysql-auth
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ums_auth
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - auth_data:/var/lib/mysql
+    networks:
+      - ums-network
+
+  mysql-department-service:
+    image: mysql:8.0
+    container_name: mysql-department-service
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ums_departmentservice_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - department_data:/var/lib/mysql
+    networks:
+      - ums-network
+
+  mysql-faculty-service:
+    image: mysql:8.0
+    container_name: mysql-faculty-service
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ums_facultyservice_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - faculty_data:/var/lib/mysql
+    networks:
+      - ums-network
+
+  mysql-student-service:
+    image: mysql:8.0
+    container_name: mysql-student-service
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ums_studentservice_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - student_data:/var/lib/mysql
+    networks:
+      - ums-network
+
+  mysql-course-service:
+    image: mysql:8.0
+    container_name: mysql-course-service
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ums_courseservice_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - course_data:/var/lib/mysql
+    networks:
+      - ums-network
+
+  mysql-enrollment-service:
+    image: mysql:8.0
+    container_name: mysql-enrollment-service
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ums_enrollmentservice_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - enrollment_data:/var/lib/mysql
+    networks:
+      - ums-network
+
+  # ------------------------------------------------------------------
+  # 4. Microservices
+  # ------------------------------------------------------------------
+  auth-service:
+    build: ./auth-service
+    image: ums/auth-service:1.0
+    container_name: auth-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-auth:3306/ums_auth?createDatabaseIfNotExist=true
+    depends_on:
+      - eureka-server
+      - mysql-auth
+    networks:
+      - ums-network
+
+  department-service:
+    build: ./department-service
+    image: ums/department-service:1.0
+    container_name: department-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-department-service:3306/ums_departmentservice_db?createDatabaseIfNotExist=true
+    depends_on:
+      - eureka-server
+      - mysql-department-service
+    networks:
+      - ums-network
+
+  faculty-service:
+    build: ./faculty-service
+    image: ums/faculty-service:1.0
+    container_name: faculty-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-faculty-service:3306/ums_facultyservice_db?createDatabaseIfNotExist=true
+    depends_on:
+      - eureka-server
+      - mysql-faculty-service
+    networks:
+      - ums-network
+
+  student-service:
+    build: ./student-service
+    image: ums/student-service:1.0
+    container_name: student-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-student-service:3306/ums_studentservice_db?createDatabaseIfNotExist=true
+    depends_on:
+      - eureka-server
+      - mysql-student-service
+    networks:
+      - ums-network
+
+  course-service:
+    build: ./course-service
+    image: ums/course-service:1.0
+    container_name: course-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-course-service:3306/ums_courseservice_db?createDatabaseIfNotExist=true
+    depends_on:
+      - eureka-server
+      - mysql-course-service
+    networks:
+      - ums-network
+
+  enrollment-service:
+    build: ./enrollment-service
+    image: ums/enrollment-service:1.0
+    container_name: enrollment-service
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-enrollment-service:3306/ums_enrollmentservice_db?createDatabaseIfNotExist=true
+    depends_on:
+      - eureka-server
+      - mysql-enrollment-service
+    networks:
+      - ums-network
+
+volumes:
+  auth_data:
+  department_data:
+  faculty_data:
+  student_data:
+  course_data:
+  enrollment_data:
+
+networks:
+  ums-network:
+    driver: bridge
