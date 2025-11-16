@@ -5,9 +5,9 @@ spring:
   application:
     name: enrollment-service
   datasource:
-    url: jdbc:mysql://mysql-enrollment-service:3306/ums_enrollmentservice_db?createDatabaseIfNotExist=true
-    username: user
-    password: password
+    url: jdbc:mysql://localhost:3306/ums_enrollmentservice_db?createDatabaseIfNotExist=true
+    username: root
+    password: your_password
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -23,4 +23,3 @@ eureka:
       defaultZone: http://eureka-server:8761/eureka/
   instance:
     hostname: enrollment-service
-

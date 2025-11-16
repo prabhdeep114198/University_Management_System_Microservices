@@ -1,0 +1,11 @@
+/Users/mac/Desktop/microservices/ums-microservices/auth-service/src/main/java/com/manus/ums/authservice/AuthServiceApplication.java
+/Users/mac/Desktop/microservices/ums-microservices/auth-service/src/main/java/com/manus/ums/authservice/config/SecurityConfig.java
+/Users/mac/Desktop/microservices/ums-microservices/auth-service/src/main/java/com/manus/ums/authservice/controller/AuthController.java
+/Users/mac/Desktop/microservices/ums-microservices/auth-service/src/main/java/com/manus/ums/authservice/dto/AuthRequest.java
+/Users/mac/Desktop/microservices/ums-microservices/auth-service/src/main/java/com/manus/ums/authservice/dto/AuthResponse.java
+/Users/mac/Desktop/microservices/ums-microservices/auth-service/src/main/java/com/manus/ums/authservice/dto/RegisterRequest.java
+/Users/mac/Desktop/microservices/ums-microservices/auth-service/src/main/java/com/manus/ums/authservice/entity/Role.java
+/Users/mac/Desktop/microservices/ums-microservices/auth-service/src/main/java/com/manus/ums/authservice/entity/User.java
+/Users/mac/Desktop/microservices/ums-microservices/auth-service/src/main/java/com/manus/ums/authservice/repository/UserRepository.java
+/Users/mac/Desktop/microservices/ums-microservices/auth-service/src/main/java/com/manus/ums/authservice/service/AuthService.java
+/Users/mac/Desktop/microservices/ums-microservices/auth-service/src/main/java/com/manus/ums/authservice/service/JwtService.java
