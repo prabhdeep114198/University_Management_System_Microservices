@@ -1,0 +1,26 @@
+server:
+  port: 8086
+
+spring:
+  application:
+    name: course-service
+  datasource:
+    url: jdbc:mysql://mysql-course-service:3306/ums_courseservice_db?createDatabaseIfNotExist=true
+    username: user
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server:8761/eureka/
+  instance:
+    hostname: course-service
+
