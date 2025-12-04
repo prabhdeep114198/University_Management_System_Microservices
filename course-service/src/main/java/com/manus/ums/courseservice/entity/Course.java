@@ -11,33 +11,45 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Course {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String title; private String code; private Long departmentId; private Long facultyId;
+
+    private String title;
+    private String code;
+    private Long departmentId;
+    private Long facultyId;
+
+    private Long studentId;
+    private Long courseId;
+    private String grade;
+
     public void setGrade(Object grade) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setGrade'");
+        this.grade = grade != null ? grade.toString() : null;
     }
+
     public void setCourseId(Object courseId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setCourseId'");
+        this.courseId = (courseId instanceof Number)
+                ? ((Number) courseId).longValue()
+                : courseId != null ? Long.valueOf(courseId.toString()) : null;
     }
+
     public void setStudentId(Object studentId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setStudentId'");
+        this.studentId = (studentId instanceof Number)
+                ? ((Number) studentId).longValue()
+                : studentId != null ? Long.valueOf(studentId.toString()) : null;
     }
+
     public Object getStudentId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getStudentId'");
+        return this.studentId;
     }
+
     public Object getCourseId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCourseId'");
+        return this.courseId;
     }
+
     public Object getGrade() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getGrade'");
+        return this.grade;
     }
 }
-

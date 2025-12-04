@@ -8,31 +8,39 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CourseDto {
+
     private Long id;
-    private String title; private String code; private Long departmentId; private Long facultyId;
-    public Object getGrade() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getGrade'");
-    }
-    public Object getCourseId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCourseId'");
-    }
-    public Object getStudentId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getStudentId'");
-    }
+    private String title;
+    private String code;
+    private Long departmentId;
+    private Long facultyId;
+    private Long studentId;
+    private Long courseId;
+    private String grade;
+
+    // Overloaded setters that accept Object:
+
     public void setStudentId(Object studentId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setStudentId'");
+        if (studentId == null) {
+            this.studentId = null;
+            return;
+        }
+        this.studentId = Long.valueOf(studentId.toString());
     }
-    public void setGrade(Object grade) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setGrade'");
-    }
+
     public void setCourseId(Object courseId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setCourseId'");
+        if (courseId == null) {
+            this.courseId = null;
+            return;
+        }
+        this.courseId = Long.valueOf(courseId.toString());
+    }
+
+    public void setGrade(Object grade) {
+        if (grade == null) {
+            this.grade = null;
+            return;
+        }
+        this.grade = grade.toString();
     }
 }
-

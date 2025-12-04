@@ -9,38 +9,44 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EnrollmentDto {
     private Long id;
-    private Long studentId; private Long courseId; private String grade;
-    public Object getTitle() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getTitle'");
+    private Long studentId;
+    private Long courseId;
+    private String grade;
+
+    private String title;
+    private String code;
+    private Long departmentId;
+    private Long facultyId;
+
+    public String getTitle() {
+        return title;
     }
-    public Object getCode() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCode'");
+
+    public String getCode() {
+        return code;
     }
-    public Object getDepartmentId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDepartmentId'");
+
+    public Long getDepartmentId() {
+        return departmentId;
     }
-    public Object getFacultyId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getFacultyId'");
+
+    public Long getFacultyId() {
+        return facultyId;
     }
+
     public void setTitle(Object title) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setTitle'");
+        this.title = (String) title;
     }
+
     public void setDepartmentId(Object departmentId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setDepartmentId'");
+        this.departmentId = (Long) departmentId;
     }
+
     public void setFacultyId(Object facultyId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setFacultyId'");
+        this.facultyId = (Long) facultyId;
     }
+
     public void setCode(Object code) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setCode'");
+        this.code = (String) code;
     }
 }
-

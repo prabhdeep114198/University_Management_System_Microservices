@@ -8,47 +8,54 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DepartmentDto {
+
     private Long id;
-    private String name; private String code;
-    public Object getFirstName() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getFirstName'");
+    private String name;
+    private String code;
+
+    private String firstName;
+    private String lastName;
+    private String email;
+    private Long studentId;
+    private Long departmentId;
+
+    public String getFirstName() {
+        return firstName;
     }
-    public Object getLastName() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getLastName'");
+
+    public String getLastName() {
+        return lastName;
     }
-    public Object getEmail() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getEmail'");
+
+    public String getEmail() {
+        return email;
     }
-    public Object getStudentId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getStudentId'");
+
+    public Long getStudentId() {
+        return studentId;
     }
-    public Object getDepartmentId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDepartmentId'");
+
+    public Long getDepartmentId() {
+        return departmentId;
     }
-    public void setDepartmentId(Object departmentId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setDepartmentId'");
-    }
-    public void setStudentId(Object studentId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setStudentId'");
-    }
-    public void setEmail(Object email) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setEmail'");
-    }
-    public void setLastName(Object lastName) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setLastName'");
-    }
+
     public void setFirstName(Object firstName) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setFirstName'");
+        this.firstName = (String) firstName;
+    }
+
+    public void setLastName(Object lastName) {
+        this.lastName = (String) lastName;
+    }
+
+    public void setEmail(Object email) {
+        this.email = (String) email;
+    }
+
+    public void setStudentId(Object studentId) {
+        this.studentId = (Long) studentId;
+    }
+
+    public void setDepartmentId(Object departmentId) {
+        this.departmentId = (Long) departmentId;
     }
 }
-

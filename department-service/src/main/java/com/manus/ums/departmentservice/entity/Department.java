@@ -11,49 +11,62 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Department {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name; private String code;
+
+    private String name;
+    private String code;
+
+    // Add missing fields
+    private Long departmentId;
+    private Long studentId;
+    private String firstName;
+    private String lastName;
+    private String email;
+
+    // Object-based setters (implemented properly)
+
     public void setDepartmentId(Object departmentId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setDepartmentId'");
+        this.departmentId = departmentId == null ? null : Long.valueOf(departmentId.toString());
     }
+
     public void setStudentId(Object studentId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setStudentId'");
+        this.studentId = studentId == null ? null : Long.valueOf(studentId.toString());
     }
-    public void setLastName(Object lastName) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setLastName'");
-    }
-    public void setEmail(Object email) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setEmail'");
-    }
+
     public void setFirstName(Object firstName) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setFirstName'");
+        this.firstName = firstName == null ? null : firstName.toString();
     }
-    public Object getFirstName() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getFirstName'");
+
+    public void setLastName(Object lastName) {
+        this.lastName = lastName == null ? null : lastName.toString();
     }
-    public Object getLastName() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getLastName'");
+
+    public void setEmail(Object email) {
+        this.email = email == null ? null : email.toString();
     }
-    public Object getEmail() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getEmail'");
-    }
-    public Object getStudentId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getStudentId'");
-    }
+
+    // Object-based getters (just return the fields)
+
     public Object getDepartmentId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDepartmentId'");
+        return departmentId;
+    }
+
+    public Object getStudentId() {
+        return studentId;
+    }
+
+    public Object getFirstName() {
+        return firstName;
+    }
+
+    public Object getLastName() {
+        return lastName;
+    }
+
+    public Object getEmail() {
+        return email;
     }
 }
-

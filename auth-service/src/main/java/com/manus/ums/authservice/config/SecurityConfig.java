@@ -18,7 +18,7 @@ public class SecurityConfig {
         http
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> auth
-                .anyRequest().permitAll() // Auth service handles its own security, allowing all requests for simplicity
+                .anyRequest().permitAll()
             );
         return http.build();
     }

@@ -11,33 +11,42 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Faculty {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstName; private String lastName; private String email; private Long departmentId;
+
+    private String firstName;
+    private String lastName;
+    private String email;
+    private Long departmentId;
+
+    // Extra fields for unwanted methods
+    private String name;
+    private String code;
+    private Long studentId;
+
     public void setName(Object name) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setName'");
+        this.name = name == null ? null : name.toString();
     }
+
     public void setCode(Object code) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setCode'");
+        this.code = code == null ? null : code.toString();
     }
+
     public void setStudentId(Object studentId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setStudentId'");
+        this.studentId = studentId == null ? null : Long.valueOf(studentId.toString());
     }
+
     public Object getName() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getName'");
+        return name;
     }
-    public Object getStudentId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getStudentId'");
-    }
+
     public Object getCode() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCode'");
+        return code;
+    }
+
+    public Object getStudentId() {
+        return studentId;
     }
 }
-

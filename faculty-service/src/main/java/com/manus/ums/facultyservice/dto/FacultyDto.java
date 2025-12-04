@@ -9,30 +9,36 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class FacultyDto {
     private Long id;
-    private String firstName; private String lastName; private String email; private Long departmentId;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private Long departmentId;
+
+    private String name;
+    private String code;
+    private Long studentId;
+
     public Object getName() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getName'");
+        return name;
     }
+
     public Object getCode() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCode'");
+        return code;
     }
+
     public Object getStudentId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getStudentId'");
+        return studentId;
     }
+
     public void setStudentId(Object studentId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setStudentId'");
+        this.studentId = (Long) studentId;
     }
+
     public void setCode(Object code) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setCode'");
+        this.code = (String) code;
     }
+
     public void setName(Object name) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setName'");
+        this.name = (String) name;
     }
 }
-

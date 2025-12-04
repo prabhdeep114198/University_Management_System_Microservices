@@ -8,31 +8,38 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudentDto {
+
     private Long id;
-    private String firstName; private String lastName; private String email; private String studentId;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String studentId;
+
+    private String name;        // department name?
+    private String code;        // course or dep code?
+    private Long departmentId;  // student's department
+
     public Object getName() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getName'");
+        return name;
     }
+
     public Object getCode() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCode'");
+        return code;
     }
+
     public Object getDepartmentId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDepartmentId'");
+        return departmentId;
     }
+
     public void setName(Object name) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setName'");
+        this.name = (String) name;
     }
+
     public void setCode(Object code) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setCode'");
+        this.code = (String) code;
     }
+
     public void setDepartmentId(Object departmentId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setDepartmentId'");
+        this.departmentId = (Long) departmentId;
     }
 }
-

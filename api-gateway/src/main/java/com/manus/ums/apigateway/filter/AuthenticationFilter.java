@@ -26,7 +26,6 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
     }
 
     public static class Config {
-        // Put the configuration properties here
     }
 
     private static final List<String> openApiEndpoints = List.of(

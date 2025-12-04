@@ -11,41 +11,50 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Enrollment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long studentId; private Long courseId; private String grade;
+
+    private Long studentId;
+    private Long courseId;
+    private String grade;
+
+    // Additional fields (if required)
+    private String title;
+    private String code;
+    private Long departmentId;
+    private Long facultyId;
+
     public void setTitle(Object title) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setTitle'");
+        this.title = title == null ? null : title.toString();
     }
+
     public void setCode(Object code) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setCode'");
+        this.code = code == null ? null : code.toString();
     }
+
     public void setDepartmentId(Object departmentId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setDepartmentId'");
+        this.departmentId = departmentId == null ? null : Long.valueOf(departmentId.toString());
     }
+
     public void setFacultyId(Object facultyId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setFacultyId'");
+        this.facultyId = facultyId == null ? null : Long.valueOf(facultyId.toString());
     }
+
     public Object getTitle() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getTitle'");
+        return title;
     }
+
     public Object getCode() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getCode'");
+        return code;
     }
+
     public Object getDepartmentId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDepartmentId'");
+        return departmentId;
     }
+
     public Object getFacultyId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getFacultyId'");
+        return facultyId;
     }
 }
-
