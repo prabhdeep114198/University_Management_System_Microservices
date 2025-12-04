@@ -12,24 +12,33 @@ public class FeignClientConfig {
 
     @Bean
     public RequestInterceptor requestInterceptor() {
-        return new RequestInterceptor() {
-            @Override
-            public void apply(RequestTemplate template) {
-                ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-                if (attributes != null) {
-                    String userId = attributes.getRequest().getHeader("X-User-Id");
-                    String userRoles = attributes.getRequest().getHeader("X-User-Roles");
-                    
-                    if (userId != null) {
-                        template.header("X-User-Id", userId);
-                    }
-                    if (userRoles != null) {
-                        template.header("X-User-Roles", userRoles);
-                    }
-                    // Alternatively, forward the Authorization header if needed, but X-User-Roles is safer for internal communication
-                }
+
+        return (RequestTemplate template) -> {
+            ServletRequestAttributes attributes =
+                    (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+
+            if (attributes == null) {
+                return; // No HTTP request context
+            }
+
+            var request = attributes.getRequest();
+
+            String userId = request.getHeader("X-User-Id");
+            String userRoles = request.getHeader("X-User-Roles");
+            String authHeader = request.getHeader("Authorization"); // optional
+
+            if (userId != null) {
+                template.header("X-User-Id", userId);
+            }
+
+            if (userRoles != null) {
+                template.header("X-User-Roles", userRoles);
+            }
+
+            // Optional: forward Authorization if needed
+            if (authHeader != null) {
+                template.header("Authorization", authHeader);
             }
         };
     }
 }
-

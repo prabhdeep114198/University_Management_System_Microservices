@@ -17,18 +17,20 @@ public class StudentService {
 
     public StudentDto saveStudent(StudentDto dto) {
         Student entity = mapToEntity(dto);
-        Student savedEntity = repository.save(entity);
-        return mapToDto(savedEntity);
+        Student saved = repository.save(entity);
+        return mapToDto(saved);
     }
 
     public StudentDto getStudentById(Long id) {
-        Student entity = repository.findById(id)
+        Student student = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Student not found with id: " + id));
-        return mapToDto(entity);
+        return mapToDto(student);
     }
 
     public List<StudentDto> getAllStudents() {
-        return repository.findAll().stream().map(this::mapToDto).collect(Collectors.toList());
+        return repository.findAll().stream()
+                .map(this::mapToDto)
+                .collect(Collectors.toList());
     }
 
     public void deleteStudent(Long id) {
@@ -38,29 +40,22 @@ public class StudentService {
     private Student mapToEntity(StudentDto dto) {
         Student entity = new Student();
         entity.setId(dto.getId());
-        // Map fields
-        if (dto.getName() != null) entity.setName(dto.getName());
-        if (dto.getCode() != null) entity.setCode(dto.getCode());
-        if (dto.getFirstName() != null) entity.setFirstName(dto.getFirstName());
-        if (dto.getLastName() != null) entity.setLastName(dto.getLastName());
-        if (dto.getEmail() != null) entity.setEmail(dto.getEmail());
-        if (dto.getStudentId() != null) entity.setStudentId(dto.getStudentId());
-        if (dto.getDepartmentId() != null) entity.setDepartmentId(dto.getDepartmentId());
+        entity.setFirstName(dto.getFirstName());
+        entity.setLastName(dto.getLastName());
+        entity.setEmail(dto.getEmail());
+        entity.setStudentId(dto.getStudentId());
+        entity.setDepartmentId(dto.getDepartmentId());
         return entity;
     }
 
     private StudentDto mapToDto(Student entity) {
         StudentDto dto = new StudentDto();
         dto.setId(entity.getId());
-        // Map fields
-        if (entity.getName() != null) dto.setName(entity.getName());
-        if (entity.getCode() != null) dto.setCode(entity.getCode());
-        if (entity.getFirstName() != null) dto.setFirstName(entity.getFirstName());
-        if (entity.getLastName() != null) dto.setLastName(entity.getLastName());
-        if (entity.getEmail() != null) dto.setEmail(entity.getEmail());
-        if (entity.getStudentId() != null) dto.setStudentId(entity.getStudentId());
-        if (entity.getDepartmentId() != null) dto.setDepartmentId(entity.getDepartmentId());
+        dto.setFirstName(entity.getFirstName());
+        dto.setLastName(entity.getLastName());
+        dto.setEmail(entity.getEmail());
+        dto.setStudentId(entity.getStudentId());
+        dto.setDepartmentId(entity.getDepartmentId());
         return dto;
     }
 }
-

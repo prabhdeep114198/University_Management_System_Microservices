@@ -1,5 +1,4 @@
 package com.manus.ums.apigateway.filter;
-
 import com.manus.ums.apigateway.config.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,38 +38,41 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
         return (exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
 
+            // Skip JWT check for open endpoints
             if (openApiEndpoints.stream().noneMatch(uri -> request.getURI().getPath().contains(uri))) {
-                if (!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
-                    return this.onError(exchange, "Missing Authorization header", HttpStatus.UNAUTHORIZED);
+                List<String> authHeaders = request.getHeaders().get(HttpHeaders.AUTHORIZATION);
+                if (authHeaders == null || authHeaders.isEmpty()) {
+                    return onError(exchange, "Missing Authorization header", HttpStatus.UNAUTHORIZED);
                 }
 
-                String authHeader = request.getHeaders().get(HttpHeaders.AUTHORIZATION).get(0);
-                if (authHeader != null && authHeader.startsWith("Bearer ")) {
+                String authHeader = authHeaders.get(0);
+                if (authHeader.startsWith("Bearer ")) {
                     String token = authHeader.substring(7);
                     try {
                         jwtUtil.validateToken(token);
                         Claims claims = jwtUtil.getAllClaimsFromToken(token);
-                        
-                        // Add user info to request header for downstream services
+
+                        // Forward user info downstream
                         exchange.getRequest().mutate()
                                 .header("X-User-Id", claims.getSubject())
                                 .header("X-User-Roles", claims.get("roles", String.class))
                                 .build();
 
                     } catch (Exception e) {
-                        return this.onError(exchange, "Invalid or expired JWT Token", HttpStatus.UNAUTHORIZED);
+                        return onError(exchange, "Invalid or expired JWT Token", HttpStatus.UNAUTHORIZED);
                     }
                 } else {
-                    return this.onError(exchange, "Invalid Authorization header format", HttpStatus.UNAUTHORIZED);
+                    return onError(exchange, "Invalid Authorization header format", HttpStatus.UNAUTHORIZED);
                 }
             }
+
             return chain.filter(exchange);
         };
     }
 
-    private Mono<Void> onError(ServerWebExchange exchange, String err, HttpStatus httpStatus) {
+    private Mono<Void> onError(ServerWebExchange exchange, String err, HttpStatus status) {
         ServerHttpResponse response = exchange.getResponse();
-        response.setStatusCode(httpStatus);
+        response.setStatusCode(status);
         return response.setComplete();
     }
 }

@@ -2,12 +2,9 @@ package com.manus.ums.apigateway.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.SignatureException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import java.security.Key;
 
 @Component
 public class JwtUtil {
@@ -15,16 +12,17 @@ public class JwtUtil {
     @Value("${jwt.secret}")
     private String secret;
 
-    public void validateToken(final String token) {
-        Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token);
+    public void validateToken(String token) throws Exception {
+        try {
+            Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
+        } catch (SignatureException e) {
+            throw new Exception("Invalid JWT signature");
+        } catch (Exception e) {
+            throw new Exception("JWT validation failed");
+        }
     }
 
     public Claims getAllClaimsFromToken(String token) {
-        return Jwts.parserBuilder().setSigningKey(getSignKey()).build().parseClaimsJws(token).getBody();
-    }
-
-    private Key getSignKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secret);
-        return Keys.hmacShaKeyFor(keyBytes);
+        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     }
 }

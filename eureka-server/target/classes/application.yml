@@ -1,0 +1,12 @@
+server:
+  port: 8761
+
+eureka:
+  client:
+    register-with-eureka: true      # must register
+    fetch-registry: true            # must fetch registry
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: auth-service
+

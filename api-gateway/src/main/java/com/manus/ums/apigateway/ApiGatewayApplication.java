@@ -22,25 +22,38 @@ public class ApiGatewayApplication {
 
     @Bean
     public RouteLocator customRouteLocator(RouteLocatorBuilder builder) {
+        AuthenticationFilter.Config config = new AuthenticationFilter.Config();
+
         return builder.routes()
+                // AUTH routes (no authentication required)
                 .route("auth-service", r -> r.path("/auth/**")
                         .uri("lb://AUTH-SERVICE"))
+
+                // STUDENT routes (apply JWT filter)
                 .route("student-service", r -> r.path("/students/**")
-                        .filters(f -> f.filter(authFilter.apply(new AuthenticationFilter.Config())))
+                        .filters(f -> f.filter(authFilter.apply(config)))
                         .uri("lb://STUDENT-SERVICE"))
+
+                // FACULTY routes
                 .route("faculty-service", r -> r.path("/faculty/**")
-                        .filters(f -> f.filter(authFilter.apply(new AuthenticationFilter.Config())))
+                        .filters(f -> f.filter(authFilter.apply(config)))
                         .uri("lb://FACULTY-SERVICE"))
+
+                // DEPARTMENT routes
                 .route("department-service", r -> r.path("/departments/**")
-                        .filters(f -> f.filter(authFilter.apply(new AuthenticationFilter.Config())))
+                        .filters(f -> f.filter(authFilter.apply(config)))
                         .uri("lb://DEPARTMENT-SERVICE"))
+
+                // COURSE routes
                 .route("course-service", r -> r.path("/courses/**")
-                        .filters(f -> f.filter(authFilter.apply(new AuthenticationFilter.Config())))
+                        .filters(f -> f.filter(authFilter.apply(config)))
                         .uri("lb://COURSE-SERVICE"))
+
+                // ENROLLMENT routes
                 .route("enrollment-service", r -> r.path("/enrollments/**")
-                        .filters(f -> f.filter(authFilter.apply(new AuthenticationFilter.Config())))
+                        .filters(f -> f.filter(authFilter.apply(config)))
                         .uri("lb://ENROLLMENT-SERVICE"))
+
                 .build();
     }
-
 }

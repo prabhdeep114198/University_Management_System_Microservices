@@ -11,14 +11,15 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class GatewayAuthFilter extends OncePerRequestFilter {
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain)
             throws ServletException, IOException {
 
         String userId = request.getHeader("X-User-Id");
@@ -29,13 +30,11 @@ public class GatewayAuthFilter extends OncePerRequestFilter {
                     .map(role -> new SimpleGrantedAuthority("ROLE_" + role.trim()))
                     .collect(Collectors.toList());
 
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                    userId, null, authorities);
-
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            UsernamePasswordAuthenticationToken auth =
+                    new UsernamePasswordAuthenticationToken(userId, null, authorities);
+            SecurityContextHolder.getContext().setAuthentication(auth);
         }
 
         filterChain.doFilter(request, response);
     }
 }
-

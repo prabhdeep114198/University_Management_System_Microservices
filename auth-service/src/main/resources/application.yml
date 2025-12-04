@@ -19,12 +19,15 @@ spring:
 
 eureka:
   client:
+    register-with-eureka: true
+    fetch-registry: true
     service-url:
-      defaultZone: http://eureka-server:8761/eureka/
+      defaultZone: http://localhost:8761/eureka/
   instance:
-    hostname: auth-service
+    instance-id: ${spring.application.name}:${random.value}
+    hostname: localhost
 
 jwt:
   secret: 5367566B5970337336763979244226452948404D635166546A576E5A72347537
-  access-token-expiration: 3600000 # 1 hour
-  refresh-token-expiration: 604800000 # 7 days
+  access-token-expiration: 3600000
+  refresh-token-expiration: 604800000
