@@ -24,4 +24,5 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka/
   instance:
-    hostname: enrollment-service
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${random.value}

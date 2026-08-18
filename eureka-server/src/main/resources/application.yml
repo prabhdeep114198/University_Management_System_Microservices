@@ -3,10 +3,10 @@ server:
 
 eureka:
   client:
-    register-with-eureka: true      # must register
-    fetch-registry: true            # must fetch registry
+    register-with-eureka: false      # Standalone server does not register with itself
+    fetch-registry: false            # Standalone server does not fetch registry
     service-url:
       defaultZone: http://localhost:8761/eureka/
   instance:
-    hostname: auth-service
+    hostname: localhost
 
