@@ -30,7 +30,13 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
     private static final List<String> openApiEndpoints = List.of(
             "/auth/register",
             "/auth/login",
-            "/eureka"
+            "/auth/refresh",
+            "/auth/validate",
+            "/eureka",
+            "/v3/api-docs",
+            "/swagger-ui",
+            "/swagger-resources",
+            "/webjars"
     );
 
     @Override
@@ -52,11 +58,16 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
                         jwtUtil.validateToken(token);
                         Claims claims = jwtUtil.getAllClaimsFromToken(token);
 
+                        String userId = claims.getSubject();
+                        String roles = claims.get("roles") != null ? claims.get("roles").toString() : "";
+
                         // Forward user info downstream
-                        exchange.getRequest().mutate()
-                                .header("X-User-Id", claims.getSubject())
-                                .header("X-User-Roles", claims.get("roles", String.class))
+                        ServerHttpRequest mutatedRequest = exchange.getRequest().mutate()
+                                .header("X-User-Id", userId != null ? userId : "")
+                                .header("X-User-Roles", roles)
                                 .build();
+
+                        return chain.filter(exchange.mutate().request(mutatedRequest).build());
 
                     } catch (Exception e) {
                         return onError(exchange, "Invalid or expired JWT Token", HttpStatus.UNAUTHORIZED);
