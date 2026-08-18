@@ -23,30 +23,40 @@ spring:
           uri: lb://STUDENT-SERVICE
           predicates:
             - Path=/students/**
+          filters:
+            - AuthenticationFilter
 
         # Faculty Service
         - id: faculty-service
           uri: lb://FACULTY-SERVICE
           predicates:
             - Path=/faculty/**
+          filters:
+            - AuthenticationFilter
 
         # Department Service
         - id: department-service
           uri: lb://DEPARTMENT-SERVICE
           predicates:
             - Path=/departments/**
+          filters:
+            - AuthenticationFilter
 
         # Course Service
         - id: course-service
           uri: lb://COURSE-SERVICE
           predicates:
             - Path=/courses/**
+          filters:
+            - AuthenticationFilter
 
         # Enrollment Service
         - id: enrollment-service
           uri: lb://ENROLLMENT-SERVICE
           predicates:
             - Path=/enrollments/**
+          filters:
+            - AuthenticationFilter
 
 eureka:
   client:
@@ -55,8 +65,8 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka/  # Use localhost for local testing
   instance:
-    hostname: api-gateway
+    prefer-ip-address: true
     instance-id: ${spring.application.name}:${random.value}
 
 jwt:
-  secret: 5367566B5970337336763979244226452948404D635166546A7234756E5A72347537
+  secret: 5367566B5970337336763979244226452948404D635166546A576E5A72347537
