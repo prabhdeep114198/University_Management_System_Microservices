@@ -3,6 +3,7 @@ package com.manus.ums.studentservice.service;
 import com.manus.ums.studentservice.dto.StudentDto;
 import com.manus.ums.studentservice.entity.Student;
 import com.manus.ums.studentservice.repository.StudentRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,47 +16,28 @@ public class StudentService {
     @Autowired
     private StudentRepository repository;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     public StudentDto saveStudent(StudentDto dto) {
-        Student entity = mapToEntity(dto);
+        Student entity = modelMapper.map(dto, Student.class);
         Student saved = repository.save(entity);
-        return mapToDto(saved);
+        return modelMapper.map(saved, StudentDto.class);
     }
 
     public StudentDto getStudentById(Long id) {
         Student student = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Student not found with id: " + id));
-        return mapToDto(student);
+        return modelMapper.map(student, StudentDto.class);
     }
 
     public List<StudentDto> getAllStudents() {
         return repository.findAll().stream()
-                .map(this::mapToDto)
+                .map(student -> modelMapper.map(student, StudentDto.class))
                 .collect(Collectors.toList());
     }
 
     public void deleteStudent(Long id) {
         repository.deleteById(id);
-    }
-
-    private Student mapToEntity(StudentDto dto) {
-        Student entity = new Student();
-        entity.setId(dto.getId());
-        entity.setFirstName(dto.getFirstName());
-        entity.setLastName(dto.getLastName());
-        entity.setEmail(dto.getEmail());
-        entity.setStudentId(dto.getStudentId());
-        entity.setDepartmentId(dto.getDepartmentId());
-        return entity;
-    }
-
-    private StudentDto mapToDto(Student entity) {
-        StudentDto dto = new StudentDto();
-        dto.setId(entity.getId());
-        dto.setFirstName(entity.getFirstName());
-        dto.setLastName(entity.getLastName());
-        dto.setEmail(entity.getEmail());
-        dto.setStudentId(entity.getStudentId());
-        dto.setDepartmentId(entity.getDepartmentId());
-        return dto;
     }
 }
